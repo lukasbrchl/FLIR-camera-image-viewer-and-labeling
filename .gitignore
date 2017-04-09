@@ -1,0 +1,10 @@
+.project
+.settings
+.classpath
+*.classpath
+bin
+img    
+lib
+conf/config.properties
+*.tiff
+*.bin
