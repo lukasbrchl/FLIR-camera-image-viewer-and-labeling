@@ -129,19 +129,34 @@ public class MainController {
 	 }
 	 
 	 @FXML
-	 public void saveButtonClicked() throws IOException {
+	 public void saveButtonClicked() {
 		 if (imf != null && imf.getFilePaths() != null && imf.getFilePaths().size() > 0 && !Utils.isNullOrEmpty(outputFolderText.getText()) && categoryListView.getSelectionModel().getSelectedItem() != null) {
 			 Path dirPath = Paths.get(outputFolderText.getText(), categoryListView.getSelectionModel().getSelectedItem().getPath());
 			 Path filePath = Paths.get(outputFolderText.getText(), categoryListView.getSelectionModel().getSelectedItem().getPath(), imf.getActualFile().getFileName().toString());
+			 saveFile(dirPath, filePath);			 
+		 }
+	 }
+	 
+	 private void saveFile(Path dirPath, Path filePath) {
+		 try {			
 			 Files.createDirectories(dirPath);
 			 if (!Files.exists(filePath)) {
 				 Files.createFile(filePath);
 				 Files.write(filePath, Files.readAllBytes(imf.getActualFile()), StandardOpenOption.CREATE);			 
 			 }
-			 Files.delete(imf.removeActualFile());
-			 filesListView.setItems(FXCollections.observableArrayList(imf.getFilePaths()));
-			 refreshListView();	
+		 } catch (Exception e) {
+			 e.printStackTrace();
 		 }
+	 }
+	 
+	 private void deleteActualFile() {
+		 try {
+			Files.delete(imf.removeActualFile());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		 filesListView.setItems(FXCollections.observableArrayList(imf.getFilePaths()));
+		 refreshListView();	
 	 }
 	 
 	 private void refreshListView() {
@@ -150,50 +165,64 @@ public class MainController {
 	 }
 	 
 	 private void initListView() {
-		 ObservableList<Category> items = FXCollections.observableArrayList (new Category("Ruka se zbožím", "ruka_se_zbozim"), new Category("Ruka v regále", "ruka_v_regale"),  new Category("Prázdná ruka", "prazdna_ruka"));
+		 ObservableList<Category> items = FXCollections.observableArrayList (new Category("Pozadí", "pozadi"), new Category("Ruka se zbožím", "ruka_se_zbozim"),  new Category("Prázdná ruka", "prazdna_ruka"), new Category("Ruka v regále", "ruka_v_regale") );
 		 categoryListView.setItems(items);
 	 }
 	 
 	 public void initSceneListener() {
 		 mainBorderPane.getScene().setOnKeyPressed((event) -> {
 				try {
+					Path dirPath;
+					Path filePath;
 		            switch (event.getCode()) {
 		                case DIGIT1: 
-		                	categoryListView.getSelectionModel().select(0);
+		                	dirPath = Paths.get(outputFolderText.getText(), categoryListView.getItems().get(0).getPath());
+		       			 	filePath = Paths.get(outputFolderText.getText(), categoryListView.getItems().get(0).getPath(), imf.getActualFile().getFileName().toString());
+		       			 	saveFile(dirPath, filePath);
 							break;
 		                case DIGIT2: 
-		                	categoryListView.getSelectionModel().select(1);
+		                	dirPath = Paths.get(outputFolderText.getText(), categoryListView.getItems().get(1).getPath());
+		       			 	filePath = Paths.get(outputFolderText.getText(), categoryListView.getItems().get(1).getPath(), imf.getActualFile().getFileName().toString());
+		       			 	saveFile(dirPath, filePath);
 		                	break;
 		                case DIGIT3:  
-		                	categoryListView.getSelectionModel().select(2);
+		                	dirPath = Paths.get(outputFolderText.getText(), categoryListView.getItems().get(2).getPath());
+		       			 	filePath = Paths.get(outputFolderText.getText(), categoryListView.getItems().get(2).getPath(), imf.getActualFile().getFileName().toString());
+		       			 	saveFile(dirPath, filePath);
 		                	break;
-		                case DIGIT4: 
-		                	categoryListView.getSelectionModel().select(3);
+		                case DIGIT4:   
+		                	dirPath = Paths.get(outputFolderText.getText(), categoryListView.getItems().get(3).getPath());
+		       			 	filePath = Paths.get(outputFolderText.getText(), categoryListView.getItems().get(3).getPath(), imf.getActualFile().getFileName().toString());
+		       			 	saveFile(dirPath, filePath);
 		                	break;
 		                case DIGIT5:
-		                	categoryListView.getSelectionModel().select(4);
+
 		                	break;
 		                case DIGIT6: 
-		                	categoryListView.getSelectionModel().select(5);
+		                	
 		                	break;
 		                case DIGIT7: 
-		                	categoryListView.getSelectionModel().select(6);
+
 		                	break;
 		                case DIGIT8:
-		                	categoryListView.getSelectionModel().select(7);
+
 		                	break;
 		                case DIGIT9: 
-		                	categoryListView.getSelectionModel().select(8);
-							break;
+
+		                	break;
 		                case LEFT: 
 		                	prevButtonClicked();
 		                	break;
 		                case RIGHT: 
 		                	nextButtonClicked();
 		                	break;
-		                case S: 
-		                	saveButtonClicked();
+//		                case S: 
+//		                	saveButtonClicked();
+//		                	break;
+		                case D: 
+		                	deleteActualFile();
 		                	break;
+
 		                default: break;
 		            }  
 				} catch (Exception e) {
