@@ -1,7 +1,7 @@
 # FLIR image viewer and labeling
 
 This repository contains utility Java application which was created during my 
-Bachelor thesis Detecion of products in customer's hand by IR camera (https://github.com/lukasbrchl/Bachelor-thesis-text-sources).
+bachelor thesis Detecion of products in customer's hand by IR camera (https://github.com/lukasbrchl/Bachelor-thesis-text-sources).
 The app is able to read FLIR camera's raw temperature data and view them as an image. 
 Images could be also labeled to predefined (hardcoded) categories for classification purposes. 
 
