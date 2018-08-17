@@ -1,5 +1,3 @@
-package application;
-
 public class Category {
 	private final String label;
 	private final String path;

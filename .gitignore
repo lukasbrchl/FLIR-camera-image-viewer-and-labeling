@@ -5,6 +5,7 @@
 bin
 img    
 lib
+.idea/
 conf/config.properties
 *.tiff
 *.bin

@@ -1,49 +1,30 @@
-package application;
-
 import javafx.scene.paint.Color;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.nio.file.attribute.FileAttribute;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-import javax.swing.event.ChangeListener;
-
-import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button ;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 
 
 public class MainController {
 
 	public static final int IMAGE_WIDTH = 640, IMAGE_HEIGHT = 512;
-	public static final int IMAGE_CROPPED_WIDTH = 640, IMAGE_CROPPED_HEIGHT = 200;	
-	public static final int CROP_OFFSET_X = 0, CROP_OFFSET_Y = 110;;
 
 	@FXML private BorderPane mainBorderPane;
 	@FXML private ImageView mainImageView;
@@ -84,10 +65,6 @@ public class MainController {
 					Utils.updateFXControl(mainImageView.imageProperty(), img);
 					filesListView.setItems(FXCollections.observableArrayList(imf.getFilePaths()));
 					filesListView.getSelectionModel().select(0);
-					
-					mainImageCanvas.getGraphicsContext2D().setStroke(Color.WHITE);
-					mainImageCanvas.getGraphicsContext2D().setLineWidth(2);
-					mainImageCanvas.getGraphicsContext2D().strokeRect(CROP_OFFSET_X, CROP_OFFSET_Y, IMAGE_CROPPED_WIDTH, IMAGE_CROPPED_HEIGHT);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}				 
@@ -99,7 +76,6 @@ public class MainController {
 	 @FXML 
 	 public void selectFolder(ActionEvent event) {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
-		directoryChooser.setInitialDirectory(new File("D:\\ThesisProjectImages\\"));
 
 		File file = directoryChooser.showDialog(mainBorderPane.getScene().getWindow());
 
@@ -165,7 +141,7 @@ public class MainController {
 	 }
 	 
 	 private void initListView() {
-		 ObservableList<Category> items = FXCollections.observableArrayList (new Category("Pozadí", "pozadi"), new Category("Ruka se zbožím", "ruka_se_zbozim"),  new Category("Prázdná ruka", "prazdna_ruka"), new Category("Ruka v regále", "ruka_v_regale") );
+		 ObservableList<Category> items = FXCollections.observableArrayList (new Category("Background", "background"), new Category("Hand with product", "hand_product"),  new Category("Empty hand", "empty_hand"), new Category("Hand in shelf", "hand_in_shelf") );
 		 categoryListView.setItems(items);
 	 }
 	 
@@ -216,10 +192,7 @@ public class MainController {
 		                case RIGHT: 
 		                	nextButtonClicked();
 		                	break;
-//		                case S: 
-//		                	saveButtonClicked();
-//		                	break;
-		                case D: 
+		                case D:
 		                	deleteActualFile();
 		                	break;
 

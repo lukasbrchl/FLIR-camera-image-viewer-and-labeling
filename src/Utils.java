@@ -1,5 +1,3 @@
-package application;
-
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 
